@@ -1,29 +1,49 @@
 import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, 
+{ useContext }
+     from 'react'
 import { MEALS } from '../data/dummy-data'
 import MealDetails from '../components/MealDetails'
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
 import { useLayoutEffect } from 'react';
 import IconButton from '../components/IconButton';
+// import { FavoritesContext } from '../store/context/favorite-context';
 
-const MealDetailScreen = ({ route ,navigation}) => {
-    const mealId = route.params.mealId
-    const selectedMeal = MEALS.find((meal) => meal.id === mealId)
-    function headerButtonPressHandler(){
-console.log('pressed');
+const MealDetailScreen = ({ route, navigation }) => {
+    // const favoriteMealCtx = useContext(FavoritesContext);
+    
+
+
+    // console.log('====================================');
+    // console.log(favoriteMealCtx);
+    // console.log('====================================');
+
+    const mealId = route.params.mealId;
+
+    const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+    const mealIsFavorite = favoriteMealCtx.ids.includes(mealId)
+
+    function changeFavoriteStatusHandler() {
+        // console.log('pressed');
+        if(mealIsFavorite){
+           favoriteMealCtx.removeFavorite(mealId);
+        }else{
+            favoriteMealCtx.addFavorite(mealId);
+        }
     }
-    useLayoutEffect(()=>{
+    useLayoutEffect(() => {
         navigation.setOptions({
-            headerRight:()=>{
+            headerRight: () => {
                 return <IconButton
-                icon={'star'}
-                color={'white'}
-                 onPress={headerButtonPressHandler}/>
-              }
+                    icon={mealIsFavorite ? 'star' : 'star-outline'}
+                    color={'white'}
+                    onPress={changeFavoriteStatusHandler} />
+            }
         })
-    },[navigation,headerButtonPressHandler])
-    console.log(selectedMeal)
+    }, [navigation, changeFavoriteStatusHandler])
+    // console.log(selectedMeal)
     return (
         <ScrollView style={styles.rootConatiner}>
             <Image style={styles.image} source={{ uri: selectedMeal.imageUrl }} />
@@ -50,8 +70,8 @@ console.log('pressed');
 export default MealDetailScreen
 
 const styles = StyleSheet.create({
-    rootConatiner:{
-        marginBottom:32
+    rootConatiner: {
+        marginBottom: 32
     },
     image: {
         width: '100%',
