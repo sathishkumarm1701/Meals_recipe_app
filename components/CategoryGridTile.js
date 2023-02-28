@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 
 const CategoryGridTile = ({ title, color ,onPress}) => {
     const navigation = useNavigation();
+    
     return (
         <View style={styles.gridItem}>
             <Pressable android_ripple={{ color: '#ccc' }} style={({ pressed }) => [styles.button ,pressed ? styles.buttonPressed : null]} onPress={onPress}>

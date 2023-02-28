@@ -1,36 +1,37 @@
-import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, 
-{ useContext }
-     from 'react'
-import { MEALS } from '../data/dummy-data'
-import MealDetails from '../components/MealDetails'
+import {  Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React,{ useContext } from 'react';
+import { MEALS } from '../data/dummy-data';
+import { addFavorite, removeFavorite } from '../store/redux/favorites';
+import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
 import { useLayoutEffect } from 'react';
 import IconButton from '../components/IconButton';
+import { useDispatch, useSelector } from 'react-redux';
 // import { FavoritesContext } from '../store/context/favorite-context';
 
 const MealDetailScreen = ({ route, navigation }) => {
     // const favoriteMealCtx = useContext(FavoritesContext);
-    
 
-
-    // console.log('====================================');
-    // console.log(favoriteMealCtx);
-    // console.log('====================================');
+    const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+    const dispatch = useDispatch();
 
     const mealId = route.params.mealId;
 
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-    const mealIsFavorite = favoriteMealCtx.ids.includes(mealId)
+    // const mealIsFavorite = favoriteMealCtx.ids.includes(mealId)
+    const mealIsFavorite = favoriteMealIds.includes(mealId)
+
 
     function changeFavoriteStatusHandler() {
-        // console.log('pressed');
-        if(mealIsFavorite){
-           favoriteMealCtx.removeFavorite(mealId);
-        }else{
-            favoriteMealCtx.addFavorite(mealId);
+        if (mealIsFavorite) {
+            // favoriteMealCtx.removeFavorite(mealId);
+            dispatch(removeFavorite({id:mealId}))
+        } else {
+            // favoriteMealCtx.addFavorite(mealId);
+            dispatch(addFavorite({id:mealId}))
+
         }
     }
     useLayoutEffect(() => {

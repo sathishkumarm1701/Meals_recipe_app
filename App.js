@@ -63,7 +63,7 @@ const App = () => {
               component={DrawerNavigator}
               options={{
                 title: 'All Categories',
-                headerShown: false
+                headerShown: false,
               }}
             />
             <Stack.Screen

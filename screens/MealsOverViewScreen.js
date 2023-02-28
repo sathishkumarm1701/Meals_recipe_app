@@ -23,5 +23,5 @@ const MealsOverViewScreen = ({ route, navigation }) => {
    )
 }
 
-export default MealsOverViewScreen
+export default MealsOverViewScreen;
 
