@@ -29,12 +29,6 @@ const App = () => {
         <Stack.Screen
           name='MealsOverView'
           component={MealsOverViewScreen}
-          // options={({ route, navigation }) => {
-          //   const catId = route.params.categoryId;
-          //   return {
-          //     title: catId
-          //   }
-          // }}
         />
         <Stack.Screen name='MealDetail' component={MealDetailScreen} />
       </Stack.Navigator>
