@@ -11,7 +11,6 @@ const MealDetailScreen = ({ route ,navigation}) => {
     const mealId = route.params.mealId
     const selectedMeal = MEALS.find((meal) => meal.id === mealId)
     function headerButtonPressHandler(){
-console.log('pressed');
     }
     useLayoutEffect(()=>{
         navigation.setOptions({
@@ -23,7 +22,6 @@ console.log('pressed');
               }
         })
     },[navigation,headerButtonPressHandler])
-    console.log(selectedMeal)
     return (
         <ScrollView style={styles.rootConatiner}>
             <Image style={styles.image} source={{ uri: selectedMeal.imageUrl }} />
